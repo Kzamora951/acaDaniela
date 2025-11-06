@@ -64,7 +64,6 @@
             <a href="#" class="nav-item"><i class="fas fa-users"></i> Usuarios</a>
             <a href="/Admin/cursos" class="nav-item" id="menuCursos"><i class="fas fa-book"></i> Cursos</a>
             <a href="#ButtonExportDiv" class="nav-item"><i class="fas fa-chart-bar"></i> Reportes</a>
-            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Configuración</a>
         </div>
 
         <div class="logout-btn">
@@ -76,6 +75,9 @@
 
     <!-- Contenido principal -->
     <div class="main-content">
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="header">
             <h1>Panel de Administración</h1>
             <div class="user-info">
@@ -93,19 +95,57 @@
             </div>
         </div>
 
-        <div class="card">
-            
+        <!-- Sección de Estadísticas -->
+        <div class="dashboard-sections">
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Usuarios</h3>
+                        <p><%= usuarios ? usuarios.length : '0' %></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-success">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Profesores</h3>
+                        <p><%= usuarios ? usuarios.filter(u => u.idrol_fk === 2).length : '0' %></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-info">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Estudiantes</h3>
+                        <p><%= usuarios ? usuarios.filter(u => u.idrol_fk === 3).length : '0' %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Tabla de Usuarios -->
+        <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Lista de Usuarios</h5>
+                <button onclick="window.location.href='/Admin/nuevoAdmin'" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Nuevo Usuario
+                </button>
+            </div>
             <div class="table-responsive">
-                <button onclick="window.location.href='/Admin/nuevoAdmin'" class="btn btn-primary nuevoUsuario">Nuevo Usuario</button>
-                <table id="myTable">
-                    <thead>
+                <table id="myTable" class="table table-hover">
+                    <thead class="table-light">
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Rol</th>
-                            <th>Tipo Id</th>
-                            <th>Identificacion</th>
+                            <th>Tipo ID</th>
+                            <th>Identificación</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -173,12 +213,6 @@
         </div>
     </div>
 
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Código JavaScript irá aquí
-        });
-    </script>
 </body>
 
 </html>
