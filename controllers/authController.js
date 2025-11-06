@@ -26,7 +26,9 @@ exports.login = async (req, res) => {
             console.log("usuario no encontrado");
             return res.render('login', {
                 title: 'Iniciar Sesión',
-                error: 'Usuario no encontrado'
+                error: 'Usuario no encontrado',
+                showAlert: true,
+                alertMessage: 'Usuario no encontrado'
             });
         }
 
