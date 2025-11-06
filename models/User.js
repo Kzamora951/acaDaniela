@@ -4,33 +4,45 @@ const { APEX_BASE_URL } = process.env
 class User {
 
   static async findAll() {
-    try {
-      console.log('Buscando todos los usuarios...');
-      const url = `${APEX_BASE_URL}usuarios`;
+   try {
+        console.log('Buscando todos los usuarios...');
+        let allUsers = [];
+        let offset = 0;
+        const limit = 100; // Número de registros por página
+        let hasMore = true;
 
-      const response = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': 'Node.js/axios'
+        while (hasMore) {
+            const url = `${APEX_BASE_URL}usuarios?offset=${offset}&limit=${limit}`;
+            console.log(`Obteniendo usuarios (offset: ${offset}, limit: ${limit})...`);
+
+            const response = await axios.get(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Node.js/axios'
+                }
+            });
+
+            if (!response.data.items || response.data.items.length === 0) {
+                console.log('No hay más usuarios por cargar');
+                hasMore = false;
+                break;
+            }
+
+            allUsers = [...allUsers, ...response.data.items];
+            
+            if (response.data.items.length < limit) {
+                hasMore = false;
+            } else {
+                offset += limit;
+            }
         }
-      });
 
-      // Si no hay usuarios, devolver null
-      if (!response.data.items || response.data.items.length === 0) {
-        console.log('No se encontraron usuarios');
-        return null;
-      }
-
-      // Devolver todos los usuarios
-      const usuarios = response.data.items;
-
-      // console.log(usuarios);
-
-      return usuarios;
+        console.log(`Total de usuarios obtenidos: ${allUsers.length}`);
+        return allUsers;
 
     } catch (err) {
-      console.error('Error al buscar los usuarios:', err.message);
-      throw err;
+        console.error('Error al buscar los usuarios:', err.message);
+        throw err;
     }
   }
 
