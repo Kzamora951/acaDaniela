@@ -72,12 +72,7 @@ exports.login = async (req, res) => {
         } else if (user.idrol_fk == 2) {
             return res.redirect('/Profesor/dashboard');
         } else {
-             return res.render('login', {
-                title: 'Iniciar Sesión',
-                error: 'Los Alumnos no pueden iniciar sesión',
-                showAlert: true,
-                alertMessage: 'Los Alumnos no pueden iniciar sesión. '
-            });
+             return res.redirect('/Estudiante/HomeEstudiante');
         }
 
     } catch (error) {

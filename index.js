@@ -122,8 +122,8 @@ const profesorRoutes = require('./routes/profesor');
 app.use('/Profesor', profesorRoutes);
 
 // Ruta del dashboard de alumno (solo para alumnos)
-app.get('/alumno/dashboard', isAuthenticated, hasRole([3]), (req, res) => {
-  res.render('alumno/dashboard');
+app.get('/Estudiante/HomeEstudiante', isAuthenticated, hasRole([3]), (req, res) => {
+  res.render('Estudiante/HomeEstudiante');
 });
 
 // Ruta del dashboard de nuevo admin
